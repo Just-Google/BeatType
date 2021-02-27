@@ -13,7 +13,7 @@ public class GameplayScreen implements Screen {
     }
 
     @Override
-    public void render(float dealta) {
+    public void render(float delta) {
 
     }
 

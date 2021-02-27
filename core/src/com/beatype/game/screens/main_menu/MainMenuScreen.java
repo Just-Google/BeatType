@@ -12,7 +12,7 @@ public class MainMenuScreen implements Screen {
     }
 
     @Override
-    public void render(float dealta) {
+    public void render(float delta) {
 
     }
 
