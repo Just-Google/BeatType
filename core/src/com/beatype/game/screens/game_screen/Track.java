@@ -1,6 +1,7 @@
 package com.beatype.game.screens.game_screen;
 
 import com.badlogic.gdx.utils.Array;
+import com.beatype.game.screens.game_screen.notes.Note;
 
 public class Track {
 
