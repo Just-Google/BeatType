@@ -2,22 +2,18 @@ package com.beatype.game.screens.game_screen;
 
 public class Note {
 
-    public double songLength, holdEnd;
-    public int songBPM;
-    public String sentence, pathToSongFile, type;
+    public double bpm, holdEnd;
+    public String letter, type;
 
-    public Note (int songLength, int songBPM, String sentence, String pathToSongFile) {
-        this.songLength = songLength;
-        this.songBPM = songBPM;
-        this.sentence = sentence;
-        this.pathToSongFile = pathToSongFile;
+    public Note (int bpm, String letter) {
+        this.bpm = bpm;
+        this.letter = letter;
+        this.type = "normal";
     }
 
-    public Note (int songLength, int songBPM, String sentence, String pathToSongFile, String type, double holdEnd) {
-        this.songLength = songLength;
-        this.songBPM = songBPM;
-        this.sentence = sentence;
-        this.pathToSongFile = pathToSongFile;
+    public Note (int bpm, String letter, String type, double holdEnd) {
+        this.bpm = bpm;
+        this.letter = letter;
         this.type = type;
         this.holdEnd = holdEnd;
     }
