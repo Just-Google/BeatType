@@ -8,6 +8,7 @@ import com.beatype.game.screens.main_menu.MainMenuScreen;
 public class BeatType extends Game {
 	SpriteBatch batch;
 	BitmapFont font;
+	int test;
 	
 	@Override
 	public void create () {
