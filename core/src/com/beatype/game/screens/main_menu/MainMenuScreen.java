@@ -10,6 +10,7 @@ public class MainMenuScreen implements Screen {
     public MainMenuScreen(final BeatType game) {
         this.game = game;
         // hi
+        int test;
     }
 
     @Override
