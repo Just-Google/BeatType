@@ -4,8 +4,8 @@ public class NoteHold extends Note{
 
     public double holdEnd;
 
-    public NoteHold (double beat, String letter, double holdEnd) {
-        super(beat, letter);
+    public NoteHold (double time, String letter, double holdEnd) {
+        super(time, letter);
         this.type = "hold";
         this.holdEnd = holdEnd;
     }
