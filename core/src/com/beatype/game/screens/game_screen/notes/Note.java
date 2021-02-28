@@ -13,7 +13,7 @@ public class Note {
         this.beat = beat;
         this.letter = letter;
         this.type = "normal";
-        this.rectangle.x = 1300;
+        this.rectangle.x = 1600;
         this.rectangle.y = 450;
         this.rectangle.height = 64;
         this.rectangle.width = 64;
