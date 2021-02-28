@@ -5,28 +5,23 @@ import com.beatype.game.screens.game_screen.notes.Note;
 
 public class Track {
 
-    public Array<Note> trackMap;
+    public Array<Note> notes;
 
-    public double songLength, holdEnd;
+    public double songLength;
     public int songBPM;
-    public String sentence, pathToSongFile, type;
+    public String sentence, pathToSongFile;
 
-    public Track (double songLength, int songBPM, String sentence, String pathToSongFile, Array<Note> trackMap) {
+    public Track (double songLength, int songBPM, String sentence, String pathToSongFile, Array<Note> notes) {
         this.songLength = songLength;
         this.songBPM = songBPM;
         this.sentence = sentence;
         this.pathToSongFile = pathToSongFile;
-        this.trackMap = trackMap;
-    }
+        this.notes = notes;
 
-    public Track (double songLength, int songBPM, String sentence, String pathToSongFile, String type, double holdEnd, Array<Note> trackMap) {
-        this.songLength = songLength;
-        this.songBPM = songBPM;
-        this.sentence = sentence;
-        this.pathToSongFile = pathToSongFile;
-        this.type = type;
-        this.holdEnd = holdEnd;
-        this.trackMap = trackMap;
+        notes.add(new Note(2, "T"));
+        notes.add(new Note(4, "E"));
+        notes.add(new Note(6, "S"));
+        notes.add(new Note(8, "T"));
     }
 
 }
