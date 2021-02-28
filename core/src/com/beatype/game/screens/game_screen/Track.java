@@ -18,10 +18,11 @@ public class Track {
         this.pathToSongFile = pathToSongFile;
         this.notes = notes;
 
-        notes.add(new Note(2, "T"));
-        notes.add(new Note(4, "E"));
-        notes.add(new Note(6, "S"));
-        notes.add(new Note(8, "T"));
+        String b = "THIS IS FOR TESTING PURPOSE YES";
+
+        for (int i = 1; i <= b.length(); i++) {
+            notes.add(new Note(i, b.substring(i - 1, i)));
+        }
     }
 
 }
