@@ -1,0 +1,41 @@
+
+judgements.png
+size: 1024, 128
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+Bad
+  rotate: false
+  xy: 458, 2
+  size: 150, 91
+  orig: 150, 91
+  offset: 0, 0
+  index: -1
+Good
+  rotate: false
+  xy: 2, 2
+  size: 150, 91
+  orig: 150, 91
+  offset: 0, 0
+  index: -1
+Miss
+  rotate: false
+  xy: 154, 2
+  size: 150, 91
+  orig: 150, 91
+  offset: 0, 0
+  index: -1
+Perfect
+  rotate: false
+  xy: 306, 2
+  size: 150, 91
+  orig: 150, 91
+  offset: 0, 0
+  index: -1
+Blank
+  rotate: false
+  xy: 600, 2
+  size: 150, 91
+  orig: 150, 91
+  offset: 0, 0
+  index: -1

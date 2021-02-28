@@ -1,0 +1,34 @@
+
+hp.png
+size: 2048, 64
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+Hp1
+  rotate: false
+  xy: 2, 2
+  size: 352, 47
+  orig: 352, 47
+  offset: 0, 0
+  index: -1
+Hp2
+  rotate: false
+  xy: 710, 2
+  size: 352, 47
+  orig: 352, 47
+  offset: 0, 0
+  index: -1
+Hp3
+  rotate: false
+  xy: 356, 2
+  size: 352, 47
+  orig: 352, 47
+  offset: 0, 0
+  index: -1
+Hp4
+  rotate: false
+  xy: 1064, 2
+  size: 352, 47
+  orig: 352, 47
+  offset: 0, 0
+  index: -1
