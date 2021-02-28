@@ -15,7 +15,7 @@ public class BeatType extends Game {
 	public void create () {
 		batch = new SpriteBatch();
 		font = new BitmapFont();
-		this.setScreen(new ResultScreen(this, "0", "0", "0", "0", "0", "0"));
+		this.setScreen(new GameplayScreen(this));
 	}
 
 	@Override

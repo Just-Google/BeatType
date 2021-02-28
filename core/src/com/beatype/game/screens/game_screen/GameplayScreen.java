@@ -134,13 +134,13 @@ public class GameplayScreen implements Screen {
         game.batch.draw(hpBar.findRegion(hpIndicator), 20, 50);
         game.batch.end();
 
-        if (TimeUtils.nanosToMillis(TimeUtils.nanoTime()) - TimeUtils.nanosToMillis(startTime) >= 3500)
+        if (TimeUtils.nanosToMillis(TimeUtils.nanoTime()) - TimeUtils.nanosToMillis(startTime) >= 4500)
             song.play();
 
         Iterator<Note> iter = trackMap.notes.iterator();
         while (iter.hasNext()) {
             Note note = iter.next();
-            if (note.time - 3000 <= TimeUtils.nanosToMillis(TimeUtils.timeSinceNanos(startTime)) - (COUNTDOWN * 1000) && !notes.contains(note, false)) {
+            if (note.time - 2000 <= TimeUtils.nanosToMillis(TimeUtils.timeSinceNanos(startTime)) - (COUNTDOWN * 1000) && !notes.contains(note, false)) {
                 notes.add(note);
                 iter.remove();
             }
