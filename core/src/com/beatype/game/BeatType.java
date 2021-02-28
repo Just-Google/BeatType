@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.beatype.game.screens.game_screen.GameplayScreen;
 import com.beatype.game.screens.main_menu.MainMenuScreen;
+import com.beatype.game.screens.result_screen.ResultScreen;
 
 public class BeatType extends Game {
 	public SpriteBatch batch;
@@ -14,7 +15,7 @@ public class BeatType extends Game {
 	public void create () {
 		batch = new SpriteBatch();
 		font = new BitmapFont();
-		this.setScreen(new GameplayScreen(this));
+		this.setScreen(new ResultScreen(this, "0", "0", "0", "0", "0", "0"));
 	}
 
 	@Override

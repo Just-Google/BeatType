@@ -12,11 +12,11 @@ public class ResultScreen implements Screen {
     TextureAtlas numbers;
     final BeatType game;
 
-    public ResultScreen(final BeatType game, int perfect, int good, int bad, int miss, double acc, int score) {
+    public ResultScreen(final BeatType game, String perfect, String good, String bad, String miss, String acc, String score) {
         this.game = game;
         ui = new TextureAtlas("core/assets/result/Result.atlas");
         judge = new TextureAtlas("core/assets/gameplay/judgement/judgements.atlas");
-        numbers = new TextureAtlas("");
+        numbers = new TextureAtlas("core/assets/gameplay/Number/Numbers.atlas");
 
     }
 
@@ -24,7 +24,7 @@ public class ResultScreen implements Screen {
     public void render(float delta) {
         ScreenUtils.clear(0,0,0,1);
         game.batch.begin();
-
+        game.batch.draw(ui.findRegion());
         game.batch.end();
     }
 
