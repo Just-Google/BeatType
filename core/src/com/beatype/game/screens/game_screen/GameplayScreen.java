@@ -259,7 +259,7 @@ public class GameplayScreen implements Screen {
     private void changeScore() {
         String scoreString = dfScore.format(score);
         for (int i = 0; i < 6; i++) {
-            scoreNum.set(i, scoreString.substring(i, i + 1));
+            scoreNum.set(5 - i, scoreString.substring(i, i + 1));
         }
     }
 
