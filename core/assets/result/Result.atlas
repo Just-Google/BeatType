@@ -1,0 +1,27 @@
+
+Result.png
+size: 2048, 1024
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+Back
+  rotate: false
+  xy: 2, 2
+  size: 434, 153
+  orig: 1600, 900
+  offset: 27, 12
+  index: -1
+ET
+  rotate: false
+  xy: 734, 392
+  size: 700, 403
+  orig: 1600, 900
+  offset: 816, 305
+  index: -1
+RankingPanel
+  rotate: false
+  xy: 2, 157
+  size: 730, 638
+  orig: 1600, 900
+  offset: 34, 242
+  index: -1
