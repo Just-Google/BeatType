@@ -38,9 +38,9 @@ public class GameplayScreen implements Screen {
         this.trackMap = new Track(10000, 1, "test", "", new Array<Note>());
 
         track = new Rectangle();
-        trackDisplay = new Texture("Playfieldpng.png");
+        trackDisplay = new Texture("gameplay/play track.png");
 
-        letters = new TextureAtlas(Gdx.files.internal("letters/pack/letters.atlas"));
+        letters = new TextureAtlas(Gdx.files.internal("gameplay/letters/letters.atlas"));
 
         startTime = TimeUtils.nanoTime();
 
@@ -49,7 +49,12 @@ public class GameplayScreen implements Screen {
         Gdx.input.setInputProcessor(new InputAdapter() {
             @Override public boolean keyDown (int keycode) {
                 if (keycode == Input.Keys.valueOf(notes.get(0).letter)) {
-                    System.out.println(notes.get(0).letter);
+                    if (notes.get(0).rectangle.x < 250)
+                        notes.removeIndex(0);
+                }
+                if (keycode == Input.Keys.SPACE && notes.get(0).letter == "SPACE") {
+                    if (notes.get(0).rectangle.x < 250)
+                        notes.removeIndex(0);
                 }
                 return true;
             }
@@ -63,6 +68,8 @@ public class GameplayScreen implements Screen {
         game.batch.begin();
         game.batch.draw(trackDisplay, 0, 400, 1600, 170);
         for (Note note: notes) {
+            if (note.letter.equals(" "))
+                note.letter = "SPACE";
             game.batch.draw(letters.findRegion(note.letter), note.rectangle.x, note.rectangle.y);
         }
         game.batch.end();
