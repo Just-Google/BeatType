@@ -47,7 +47,6 @@ public class GameplayScreen implements Screen {
     int judgementX, judgementY;
 
     Long startTime;
-    DecimalFormat dfAcc = new DecimalFormat("0.00");
     DecimalFormat dfScore = new DecimalFormat("000000");
 
     int COUNTDOWN;
@@ -166,13 +165,13 @@ public class GameplayScreen implements Screen {
         game.batch.draw(numbers.findRegion(scoreNum.get(0)), 1475, 780);
         game.batch.end();
 
-        if (TimeUtils.nanosToMillis(TimeUtils.nanoTime()) - TimeUtils.nanosToMillis(startTime) >= 3500)
+        if (TimeUtils.nanosToMillis(TimeUtils.nanoTime()) - TimeUtils.nanosToMillis(startTime) >= 4500)
             song.play();
 
         Iterator<Note> iter = trackMap.notes.iterator();
         while (iter.hasNext()) {
             Note note = iter.next();
-            if (note.time - 3000 <= TimeUtils.nanosToMillis(TimeUtils.timeSinceNanos(startTime)) - (COUNTDOWN * 1000) && !notes.contains(note, false)) {
+            if (note.time - 2000 <= TimeUtils.nanosToMillis(TimeUtils.timeSinceNanos(startTime)) - (COUNTDOWN * 1000) && !notes.contains(note, false)) {
                 notes.add(note);
                 iter.remove();
             }
@@ -201,7 +200,7 @@ public class GameplayScreen implements Screen {
         else if (health < 100)
             hpIndicator = "Hp1";
 
-        if (health < 0 || TimeUtils.nanosToMillis(TimeUtils.timeSinceNanos(startTime)) >= trackMap.songLength + 4000) {
+        if (health < 0 || TimeUtils.nanosToMillis(TimeUtils.timeSinceNanos(startTime)) >= trackMap.songLength + 5000) {
             this.game.setScreen(new ResultScreen(game, perfect + "", good + "", bad + "", miss + "", dfScore.format(score)));
             dispose();
         }
