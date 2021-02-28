@@ -10,8 +10,13 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 import com.beatype.game.BeatType;
 import com.beatype.game.screens.game_screen.notes.*;
+
+import java.io.File;
 import java.util.Iterator;
 
 public class GameplayScreen implements Screen {
@@ -34,8 +39,6 @@ public class GameplayScreen implements Screen {
 
     public GameplayScreen(final BeatType game) {
         this.game = game;
-
-        this.trackMap = new Track(10000, 1, "test", "", new Array<Note>());
 
         track = new Rectangle();
         trackDisplay = new Texture("gameplay/play track.png");
@@ -77,7 +80,8 @@ public class GameplayScreen implements Screen {
         Iterator<Note> iter = trackMap.notes.iterator();
         while (iter.hasNext()) {
             Note note = iter.next();
-            if ((trackMap.songLength / ( (double) trackMap.songBPM / 60 * 1000)) * note.beat <= TimeUtils.nanosToMillis(TimeUtils.timeSinceNanos(startTime) - (COUNTDOWN * 1000) ) && !notes.contains(note, false)) {
+            //Remember to fix equation
+            if ((trackMap.songLength * note.time <= TimeUtils.nanosToMillis(TimeUtils.timeSinceNanos(startTime) - (COUNTDOWN * 1000) ) && !notes.contains(note, false))) {
                 notes.add(note);
                 iter.remove();
             }
@@ -118,5 +122,36 @@ public class GameplayScreen implements Screen {
         trackDisplay.dispose();
     }
 
-
+    public Track chartReader(String songLocation, String chartLocation) {
+        File chartFile = new File(chartLocation);
+        Array<Note> objects = new Array<Note>();
+        Track track = null;
+        try {
+            boolean parseChart = false;
+            double length = 0;
+            Scanner parser = new Scanner(chartFile);
+            while (!parseChart) {
+                String line = parser.nextLine();
+                if (line.contains("\"Length\"")) length = Double.valueOf(line.substring(9));
+                if (line.contains("\"Objects\"")) parseChart = true;
+            }
+            while (parser.hasNextLine()) {
+                String line = parser.nextLine();
+                double time;
+                String letter;
+                Note note = null;
+                if (line.contains("normal")) note = new Note(Double.valueOf(line.substring(line.indexOf(":")+1, line.indexOf(","))),
+                        line.substring(line.lastIndexOf("\"")-1,line.lastIndexOf("\"")));
+                else note = new NoteHold(Double.valueOf(line.substring(line.indexOf(":")+1, line.indexOf(","))),
+                        line.substring(line.lastIndexOf("\"")-1,line.lastIndexOf("\"")),
+                        Double.valueOf(line.substring(line.indexOf("End\":")+5, line.indexOf(",\"key"))));
+                objects.add(note);
+                note = null;
+            }
+            track = new Track(length,"",songLocation, objects);
+        } catch (FileNotFoundException e) {
+            System.out.println("Song not found");
+        }
+        return track;
+    }
 }

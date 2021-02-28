@@ -3,17 +3,17 @@ package com.beatype.game.screens.game_screen;
 import com.badlogic.gdx.utils.Array;
 import com.beatype.game.screens.game_screen.notes.Note;
 
+import java.io.File;
+
 public class Track {
 
     public Array<Note> notes;
 
     public double songLength;
-    public int songBPM;
     public String sentence, pathToSongFile;
 
-    public Track (double songLength, int songBPM, String sentence, String pathToSongFile, Array<Note> notes) {
+    public Track (double songLength, String sentence, String pathToSongFile, Array<Note> notes) {
         this.songLength = songLength;
-        this.songBPM = songBPM;
         this.sentence = sentence;
         this.pathToSongFile = pathToSongFile;
         this.notes = notes;
@@ -25,4 +25,8 @@ public class Track {
         }
     }
 
+    @Override
+    public String toString() {
+        return "Song length: " + this.songLength + "\nSong Path: " + this.pathToSongFile + "Notes: " + notes;
+    }
 }
