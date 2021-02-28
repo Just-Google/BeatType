@@ -7,6 +7,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
@@ -14,8 +15,10 @@ import com.badlogic.gdx.utils.Timer;
 import com.beatype.game.BeatType;
 
 import java.io.FileNotFoundException;
+import java.text.DecimalFormat;
 import java.util.Scanner;
 import com.beatype.game.screens.game_screen.notes.*;
+import com.beatype.game.screens.result_screen.ResultScreen;
 
 import java.io.File;
 import java.util.Iterator;
@@ -27,11 +30,12 @@ public class GameplayScreen implements Screen {
     Track trackMap;
 
     Array<Note> notes = new Array<Note>();
+    Array<String> scoreNum;
 
     Texture trackDisplay;
-
-
     Texture background;
+    Texture scoreDisplay;
+    TextureAtlas numbers;
     TextureAtlas letters;
     TextureAtlas judgements;
     TextureAtlas hpBar;
@@ -40,7 +44,10 @@ public class GameplayScreen implements Screen {
 
     String judgementSprite;
 
+    int judgementX, judgementY;
+
     Long startTime;
+    DecimalFormat dfScore = new DecimalFormat("000000");
 
     int COUNTDOWN;
 
@@ -49,8 +56,7 @@ public class GameplayScreen implements Screen {
 
     Timer timer;
 
-    int perfect, good, bad, miss;
-
+    int perfect, good, bad, miss, score;
 
     public GameplayScreen(final BeatType game) {
         this.game = game;
@@ -61,13 +67,23 @@ public class GameplayScreen implements Screen {
         song.setVolume((float) 0.3);
 
         trackDisplay = new Texture("gameplay/play track.png");
+        scoreDisplay = new Texture("gameplay/score.png");
         background = new Texture("gameplay/background.png");
 
         letters = new TextureAtlas(Gdx.files.internal("gameplay/letters/letters.atlas"));
         judgements = new TextureAtlas(Gdx.files.internal("gameplay/judgement/judgements.atlas"));
         hpBar = new TextureAtlas(Gdx.files.internal("gameplay/HP/hp.atlas"));
+        numbers = new TextureAtlas(Gdx.files.internal("gameplay/Number/Numbers.atlas"));
 
         startTime = TimeUtils.nanoTime();
+
+        judgementX = 120;
+        judgementY = 580;
+
+        scoreNum = new Array<String>();
+        for (int i = 0; i < 6; i++) {
+            scoreNum.add("0");
+        }
 
         COUNTDOWN = 3;
 
@@ -75,6 +91,8 @@ public class GameplayScreen implements Screen {
         hpIndicator = "Hp1";
 
         judgementSprite = "Blank";
+
+        score = 0;
 
         timer = new Timer();
 
@@ -92,18 +110,24 @@ public class GameplayScreen implements Screen {
                             showJudgement("Perfect");
                             perfect++;
                             health+=2;
+                            score+=100;
+                            changeScore();
                         }
                         else if (notes.get(0).rectangle.x < 150 && notes.get(0).rectangle.x > 70) {
                             notes.removeIndex(0);
                             showJudgement("Good");
                             good++;
                             health+=1;
+                            score+=50;
+                            changeScore();
                         }
                         else if (notes.get(0).rectangle.x < 170 && notes.get(0).rectangle.x > 50) {
                             notes.removeIndex(0);
                             showJudgement("Bad");
                             bad++;
                             health+=1;
+                            score+=10;
+                            changeScore();
                         }
                         else if (notes.get(0).rectangle.x < 190 && notes.get(0).rectangle.x > 30) {
                             notes.removeIndex(0);
@@ -130,8 +154,15 @@ public class GameplayScreen implements Screen {
                 note.letter = "SPACE";
             game.batch.draw(letters.findRegion(note.letter), note.rectangle.x, note.rectangle.y);
         }
-        game.batch.draw(judgements.findRegion(judgementSprite), 120, 580);
+        game.batch.draw(judgements.findRegion(judgementSprite), judgementX, judgementY);
         game.batch.draw(hpBar.findRegion(hpIndicator), 20, 50);
+        game.batch.draw(scoreDisplay, 1100, 750);
+        game.batch.draw(numbers.findRegion(scoreNum.get(5)), 1125, 780);
+        game.batch.draw(numbers.findRegion(scoreNum.get(4)), 1195, 780);
+        game.batch.draw(numbers.findRegion(scoreNum.get(3)), 1265, 780);
+        game.batch.draw(numbers.findRegion(scoreNum.get(2)), 1335, 780);
+        game.batch.draw(numbers.findRegion(scoreNum.get(1)), 1405, 780);
+        game.batch.draw(numbers.findRegion(scoreNum.get(0)), 1475, 780);
         game.batch.end();
 
         if (TimeUtils.nanosToMillis(TimeUtils.nanoTime()) - TimeUtils.nanosToMillis(startTime) >= 4500)
@@ -168,6 +199,12 @@ public class GameplayScreen implements Screen {
             hpIndicator = "Hp2";
         else if (health < 100)
             hpIndicator = "Hp1";
+
+        if (health < 0 || TimeUtils.nanosToMillis(TimeUtils.timeSinceNanos(startTime)) >= trackMap.songLength + 4700) {
+            this.game.setScreen(new ResultScreen(game, perfect + "", good + "", bad + "", miss + "", dfScore.format(score)));
+            dispose();
+        }
+
     }
 
     @Override
@@ -198,10 +235,18 @@ public class GameplayScreen implements Screen {
         hpBar.dispose();
         song.dispose();
         background.dispose();
+        scoreDisplay.dispose();
+        numbers.dispose();
     }
 
     private void showJudgement(String judgement) {
         judgementSprite = judgement;
+        judgementX += MathUtils.random(-10, 10);
+        judgementY += MathUtils.random(-10, 10);
+        if (judgementY <= 570)
+            judgementY = 570;
+        if (judgementX < 0)
+            judgementX = 0;
         timer.clear();
         timer.scheduleTask(new Timer.Task() {
             @Override
@@ -209,6 +254,13 @@ public class GameplayScreen implements Screen {
                 judgementSprite = "Blank";
             }
         }, 2, 2, 0);
+    }
+
+    private void changeScore() {
+        String scoreString = dfScore.format(score);
+        for (int i = 0; i < 6; i++) {
+            scoreNum.set(i, scoreString.substring(i, i + 1));
+        }
     }
 
     public Track chartReader(String songLocation, String chartLocation) {
